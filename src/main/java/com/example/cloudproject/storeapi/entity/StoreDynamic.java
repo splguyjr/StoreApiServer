@@ -1,18 +1,18 @@
 package com.example.cloudproject.storeapi.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 @Entity
 @Getter
 public class StoreDynamic {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long storeId;
+
+    @OneToOne
+    @MapsId//@MapsId 는 @id로 지정한 컬럼에 @OneToOne 이나 @ManyToOne 관계를 매핑시키는 역할
+    @JoinColumn()
+    private StoreStatic storeStatic;
 
     @Column(nullable = false)
     private String storeName;

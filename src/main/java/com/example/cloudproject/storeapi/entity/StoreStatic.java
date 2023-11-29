@@ -14,8 +14,9 @@ public class StoreStatic {
     @Column(nullable = false)
     private String storeName;
 
-    @Column(nullable = false)
-    private Integer categoryId;
+    @OneToOne
+    @JoinColumn(name = "categoryId", referencedColumnName = "categoryId")
+    private Category categoryId;
 
     @Column(nullable = false)
     private double x;

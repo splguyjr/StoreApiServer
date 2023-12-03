@@ -2,9 +2,11 @@ package com.example.cloudproject.storeapi.service;
 
 import com.example.cloudproject.storeapi.dto.StoreSearchTextResponseDTO;
 import com.example.cloudproject.storeapi.entity.StoreStatic;
-import com.example.cloudproject.storeapi.repository.StoreDynamicRepository;
 import com.example.cloudproject.storeapi.repository.StoreStaticRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,17 +16,21 @@ import java.util.List;
 public class UserService {
 
     private final StoreStaticRepository storeStaticRepository;
-    private final StoreDynamicRepository storeDynamicRepository;
 
     @Autowired
-    public UserService(StoreStaticRepository storeStaticRepository, StoreDynamicRepository storeDynamicRepository) {
+    public UserService(StoreStaticRepository storeStaticRepository) {
         this.storeStaticRepository = storeStaticRepository;
-        this.storeDynamicRepository = storeDynamicRepository;
+    }
+
+    public Page<StoreStatic> paging(int page, int row, String searchWord) {
+        PageRequest pageRequest = PageRequest.of(page, row);
+        return storeStaticRepository.findByStoreNameLike("%" +searchWord+ "%", pageRequest);
     }
 
     //Read by searchWord
-    public StoreSearchTextResponseDTO getText(String searchWord) {
+    /*public StoreSearchTextResponseDTO getText(String searchWord) {
         List<StoreStatic> sList = this.storeStaticRepository.findByStoreNameLike("%"+searchWord+"%");
+        //여러 개 처리 어떻게 할지 생각하기
 
         if (sList.isEmpty()) {
             return null;
@@ -41,6 +47,5 @@ public class UserService {
         storeSearchTextResponseDTO.setHashtags(l);
 
         return storeSearchTextResponseDTO;
-    }
-
+    }*/
 }

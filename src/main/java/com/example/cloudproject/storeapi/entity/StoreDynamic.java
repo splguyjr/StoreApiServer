@@ -7,11 +7,12 @@ import lombok.Getter;
 @Getter
 public class StoreDynamic {
     @Id
+    @Column(name = "storeId", nullable = false)
     private Long storeId;
 
     @OneToOne
     @MapsId//@MapsId 는 @id로 지정한 컬럼에 @OneToOne 이나 @ManyToOne 관계를 매핑시키는 역할
-    @JoinColumn()
+    @JoinColumn(name = "storeId")
     private StoreStatic storeStatic;
 
     @Column(nullable = false)

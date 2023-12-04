@@ -9,7 +9,7 @@ import lombok.Getter;
 @Getter
 public class Category {
     @Id
-    private Long categoryId;
+    private Integer categoryId;
 
     @Column(nullable = false)
     private String CategoryName;

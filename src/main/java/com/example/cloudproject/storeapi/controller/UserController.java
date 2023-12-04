@@ -29,9 +29,9 @@ public class UserController {
     }
 
 
-    //searchword, row, page를 받아
+    //searchword로 검색해 반환
     @GetMapping(path = "/search/text")
-    public ResponseEntity getText(@RequestBody StoreSearchTextRequestDTO storeSearchTextRequestDTO) {
+    public ResponseEntity getByText(@RequestBody StoreSearchTextRequestDTO storeSearchTextRequestDTO) {
         int page = storeSearchTextRequestDTO.getPage();
         int size = storeSearchTextRequestDTO.getRow();
         String searchWord = storeSearchTextRequestDTO.getSearchWord();
@@ -53,18 +53,29 @@ public class UserController {
         }
     }
 
-   /* @GetMapping(path = "/search/category")
-    public ResponseEntity<StoreSearchTextResponseDTO> getCategory(@RequestBody StoreSearchCategoryRequestDTO storeSearchCategoryRequestDTO) {
-        StoreSearchCategoryResponseDTO storeSearchCategoryResponseDTO = userService.get(storeSearchCategoryRequestDTO.getCategory());
+    //category로 검색해 반환
+   @GetMapping(path = "/search/category")
+   public ResponseEntity getByCategory(@RequestBody StoreSearchCategoryRequestDTO storeSearchCategoryRequestDTO) {
+        int page = storeSearchCategoryRequestDTO.getPage();
+        int size = storeSearchCategoryRequestDTO.getRow();
+        Integer categoryId = storeSearchCategoryRequestDTO.getCategory();
 
-        if (storeSearchCategoryResponseDTO == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
+       Page<StoreStatic> storeStaticPage = userService.paging1(page-1, size, categoryId);
+       PageInfo pageInfo = new PageInfo(page, size, (int)storeStaticPage.getTotalElements(), storeStaticPage.getTotalPages());
 
-        else {
-            return new ResponseEntity<>(storeSearchCategoryResponseDTO, HttpStatus.OK);
-        }
-    }*/
+       List<StoreStatic> sList = storeStaticPage.getContent();
+       List<StoreSearchCategoryResponseDTO> response = new ArrayList<>();
+       if(!sList.isEmpty()) {
+           for(StoreStatic s : sList) {
+               response.add(storeMapper.storeStaticToStoreSearchCategoryResponseDTO(s));
+           }
+           return new ResponseEntity<>(new StorePageDto<>(response, pageInfo), HttpStatus.OK);
+       }
+
+       else {
+           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+       }
+   }
 
 
 }

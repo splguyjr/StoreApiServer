@@ -27,6 +27,11 @@ public class UserService {
         return storeStaticRepository.findByStoreNameLike("%" +searchWord+ "%", pageRequest);
     }
 
+    public Page<StoreStatic> paging1(int page, int row, Integer categoryId) {
+        PageRequest pageRequest = PageRequest.of(page, row);
+        return storeStaticRepository.findByCategoryId_CategoryId(categoryId, pageRequest);
+    }
+
     //Read by searchWord
     /*public StoreSearchTextResponseDTO getText(String searchWord) {
         List<StoreStatic> sList = this.storeStaticRepository.findByStoreNameLike("%"+searchWord+"%");

@@ -21,7 +21,7 @@ public class StoreMapper {
     //    private Long storeId;
     //    private List<Integer> hashtags;
     public StoreSearchTextResponseDTO storeStaticToStoreSearchTextResponseDTO(StoreStatic storeStatic) {
-        Byte grade = (byte)(storeStatic.getGradeSum()/ storeStatic.getGradeNum() * 10);//소수점 첫째 자리까지 표현하기 위해 *10, 50이면 5.0을 의미
+        Byte grade = storeStatic.getGrade();
         List<Integer> hashtags = new ArrayList<>();
         hashtags.add(storeStatic.getHashtagId1());
         hashtags.add(storeStatic.getHashtagId2());
@@ -36,7 +36,7 @@ public class StoreMapper {
     }
 
     public StoreSearchCategoryResponseDTO storeStaticToStoreSearchCategoryResponseDTO(StoreStatic storeStatic) {
-        Byte grade = (byte)(storeStatic.getGradeSum()/ storeStatic.getGradeNum() * 10);//소수점 첫째 자리까지 표현하기 위해 *10, 50이면 5.0을 의미
+        Byte grade = storeStatic.getGrade();
         List<Integer> hashtags = new ArrayList<>();
         hashtags.add(storeStatic.getHashtagId1());
         hashtags.add(storeStatic.getHashtagId2());
@@ -51,7 +51,7 @@ public class StoreMapper {
     }
 
     public StoreSearchHashtagResponseDTO storeStaticToStoreSearchHashtagResponseDTO(StoreStatic storeStatic) {
-        Byte grade = (byte)(storeStatic.getGradeSum()/ storeStatic.getGradeNum() * 10);//소수점 첫째 자리까지 표현하기 위해 *10, 50이면 5.0을 의미
+        Byte grade = storeStatic.getGrade();
         List<Integer> hashtags = new ArrayList<>();
         hashtags.add(storeStatic.getHashtagId1());
         hashtags.add(storeStatic.getHashtagId2());
@@ -66,7 +66,7 @@ public class StoreMapper {
     }
 
     public StoreInfoResponseDTO storeStaticToStoreInfoResponseDTO(StoreStatic storeStatic) {
-        Byte grade = (byte)(storeStatic.getGradeSum()/ storeStatic.getGradeNum() * 10);//소수점 첫째 자리까지 표현하기 위해 *10, 50이면 5.0을 의미
+        Byte grade = storeStatic.getGrade();
         List<Integer> hashtags = new ArrayList<>();
         hashtags.add(storeStatic.getHashtagId1());
         hashtags.add(storeStatic.getHashtagId2());

@@ -113,6 +113,20 @@ public class UserController {
         }
     }
 
+    @PatchMapping(path = "/{storeId}/hashtag")
+    public ResponseEntity updateHashtag(@PathVariable Long storeId, @RequestBody StoreHashtagUpdateRequestDTO storeHashtagUpdateRequestDTO) {
+
+        Byte grade = storeHashtagUpdateRequestDTO.getGrade();
+        List<Integer> hashtags = storeHashtagUpdateRequestDTO.getHashtags();
+
+        if(userService.updateHashtag(storeId, grade, hashtags)) {
+           return ResponseEntity.ok().build();
+       }
+
+        else {
+            return ResponseEntity.badRequest().build();
+       }
+    }
 
 
 

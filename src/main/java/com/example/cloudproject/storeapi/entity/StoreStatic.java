@@ -1,10 +1,11 @@
 package com.example.cloudproject.storeapi.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 
 @Entity
 @Getter
+@Setter
 public class StoreStatic {
 
     @Id
@@ -37,10 +38,7 @@ public class StoreStatic {
     private Integer hashtagId3;
 
     @Column(nullable = false)
-    private double gradeSum;
-
-    @Column(nullable = false)
-    private Integer gradeNum;
+    private Byte grade;
 
     @Column(nullable = false)
     private Integer preferenceNum;

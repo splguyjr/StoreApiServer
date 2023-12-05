@@ -12,5 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class StoreHashtagUpdateRequestDTO {
+    private Byte grade;
     private List<Integer> hashtags;
 }

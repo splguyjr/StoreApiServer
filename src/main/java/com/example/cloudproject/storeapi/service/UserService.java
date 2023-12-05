@@ -1,5 +1,6 @@
 package com.example.cloudproject.storeapi.service;
 
+import com.example.cloudproject.storeapi.dto.StoreHashtagUpdateResponseDTO;
 import com.example.cloudproject.storeapi.dto.StoreInfoResponseDTO;
 import com.example.cloudproject.storeapi.dto.StoreSearchTextResponseDTO;
 import com.example.cloudproject.storeapi.entity.StoreStatic;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -41,25 +43,25 @@ public class UserService {
     public StoreStatic getStoreInfo(Long storeId) {
         return storeStaticRepository.findByStoreId(storeId);
     }
-    //Read by searchWord
-    /*public StoreSearchTextResponseDTO getText(String searchWord) {
-        List<StoreStatic> sList = this.storeStaticRepository.findByStoreNameLike("%"+searchWord+"%");
-        //여러 개 처리 어떻게 할지 생각하기
 
-        if (sList.isEmpty()) {
-            return null;
+    public boolean updateHashtag(Long storeId, Byte grade, List<Integer> hashtags) {
+        Optional<StoreStatic> store = storeStaticRepository.findById(storeId);
+        if (store.isPresent()) {
+            Integer hashtag1 = hashtags.get(0);
+            Integer hashtag2 = hashtags.get(1);
+            Integer hashtag3 = hashtags.get(2);
+
+            StoreStatic updateHashtag = store.get();
+            updateHashtag.setGrade(grade);
+            updateHashtag.setHashtagId1(hashtag1);
+            updateHashtag.setHashtagId2(hashtag2);
+            updateHashtag.setHashtagId3(hashtag3);
+            storeStaticRepository.save(updateHashtag);
+
+            return true;
         }
-
-        StoreSearchTextResponseDTO storeSearchTextResponseDTO = new StoreSearchTextResponseDTO();
-        storeSearchTextResponseDTO.setStoreId(sList.get(0).getStoreId());
-        storeSearchTextResponseDTO.setStoreName(sList.get(0).getStoreName());
-        storeSearchTextResponseDTO.setGrade((byte)10);
-        List<Integer> l = new ArrayList<>(3);
-        l.add(1);
-        l.add(2);
-        l.add(3);
-        storeSearchTextResponseDTO.setHashtags(l);
-
-        return storeSearchTextResponseDTO;
-    }*/
+        else {
+            return false;
+        }
+    }
 }

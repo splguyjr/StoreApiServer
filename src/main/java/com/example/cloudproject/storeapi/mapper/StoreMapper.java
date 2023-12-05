@@ -3,6 +3,7 @@ package com.example.cloudproject.storeapi.mapper;
 
 import com.example.cloudproject.storeapi.dto.StoreInfoResponseDTO;
 import com.example.cloudproject.storeapi.dto.StoreSearchCategoryResponseDTO;
+import com.example.cloudproject.storeapi.dto.StoreSearchHashtagResponseDTO;
 import com.example.cloudproject.storeapi.dto.StoreSearchTextResponseDTO;
 import com.example.cloudproject.storeapi.entity.StoreStatic;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -49,6 +50,21 @@ public class StoreMapper {
                 .build();
     }
 
+    public StoreSearchHashtagResponseDTO storeStaticToStoreSearchHashtagResponseDTO(StoreStatic storeStatic) {
+        Byte grade = (byte)(storeStatic.getGradeSum()/ storeStatic.getGradeNum() * 10);//소수점 첫째 자리까지 표현하기 위해 *10, 50이면 5.0을 의미
+        List<Integer> hashtags = new ArrayList<>();
+        hashtags.add(storeStatic.getHashtagId1());
+        hashtags.add(storeStatic.getHashtagId2());
+        hashtags.add(storeStatic.getHashtagId3());
+
+        return StoreSearchHashtagResponseDTO.builder()
+                .storeName(storeStatic.getStoreName())
+                .storeId(storeStatic.getStoreId())
+                .grade(grade)
+                .hashtags(hashtags)
+                .build();
+    }
+
     public StoreInfoResponseDTO storeStaticToStoreInfoResponseDTO(StoreStatic storeStatic) {
         Byte grade = (byte)(storeStatic.getGradeSum()/ storeStatic.getGradeNum() * 10);//소수점 첫째 자리까지 표현하기 위해 *10, 50이면 5.0을 의미
         List<Integer> hashtags = new ArrayList<>();
@@ -64,4 +80,6 @@ public class StoreMapper {
                 .hashtags(hashtags)
                 .build();
     }
+
+
 }

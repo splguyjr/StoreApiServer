@@ -15,6 +15,7 @@ public interface StoreStaticRepository extends JpaRepository<StoreStatic, Long> 
 
     Page<StoreStatic> findByStoreNameLike(String searchWord, Pageable pageable);
     Page<StoreStatic> findByCategoryId_CategoryId(Integer categoryId, Pageable pageable);
+    Page<StoreStatic> findByHashtagId1OrHashtagId2OrHashtagId3(Integer hashtagId1,Integer hashtagId2,Integer hashtagId3, Pageable pageable);
     StoreStatic findByStoreId(Long storeId);
 
 }

@@ -113,7 +113,7 @@ public class UserController {
         }
     }
 
-    @PatchMapping(path = "/{storeId}/hashtag")
+    @PatchMapping(path = "/{storeId}/hashtag-and-grade")
     public ResponseEntity updateHashtag(@PathVariable Long storeId, @RequestBody StoreHashtagUpdateRequestDTO storeHashtagUpdateRequestDTO) {
 
         Byte grade = storeHashtagUpdateRequestDTO.getGrade();

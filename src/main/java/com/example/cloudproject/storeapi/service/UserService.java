@@ -33,6 +33,11 @@ public class UserService {
         return storeStaticRepository.findByCategoryId_CategoryId(categoryId, pageRequest);
     }
 
+    public Page<StoreStatic> paging2(int page, int row, Integer hashtagId) {
+        PageRequest pageRequest = PageRequest.of(page, row);
+        return storeStaticRepository.findByHashtagId1OrHashtagId2OrHashtagId3(hashtagId, hashtagId,hashtagId, pageRequest);
+    }
+
     public StoreStatic getStoreInfo(Long storeId) {
         return storeStaticRepository.findByStoreId(storeId);
     }

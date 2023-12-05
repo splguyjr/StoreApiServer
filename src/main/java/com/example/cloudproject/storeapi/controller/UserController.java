@@ -26,7 +26,7 @@ public class UserController {
     }
 
 
-    //searchword로 검색해 반환
+    //searchword로 검색해 가게 정보 리스트 반환
     @GetMapping(path = "/search/text")
     public ResponseEntity getByText(@RequestBody StoreSearchTextRequestDTO storeSearchTextRequestDTO) {
         int page = storeSearchTextRequestDTO.getPage();
@@ -50,7 +50,7 @@ public class UserController {
         }
     }
 
-    //category로 검색해 반환
+    //category로 검색해 가게 정보 리스트 반환
    @GetMapping(path = "/search/category")
    public ResponseEntity getByCategory(@RequestBody StoreSearchCategoryRequestDTO storeSearchCategoryRequestDTO) {
         int page = storeSearchCategoryRequestDTO.getPage();
@@ -74,7 +74,32 @@ public class UserController {
        }
    }
 
-    @GetMapping(path = "/{storeId}")
+   //hashtag로 검색해 가게 정보 리스트 반환
+    @GetMapping(path = "/search/hashtag")
+    public ResponseEntity getByHashtag(@RequestBody StoreSearchHashtagRequestDTO storeSearchHashtagRequestDTO) {
+        int page = storeSearchHashtagRequestDTO.getPage();
+        int size = storeSearchHashtagRequestDTO.getRow();
+        Integer hashtagId = storeSearchHashtagRequestDTO.getHashtagId();
+
+        Page<StoreStatic> storeStaticPage = userService.paging2(page-1, size, hashtagId);
+        PageInfo pageInfo = new PageInfo(page, size, (int)storeStaticPage.getTotalElements(), storeStaticPage.getTotalPages());
+
+        List<StoreStatic> sList = storeStaticPage.getContent();
+        List<StoreSearchHashtagResponseDTO> response = new ArrayList<>();
+        if(!sList.isEmpty()) {
+            for(StoreStatic s : sList) {
+                response.add(storeMapper.storeStaticToStoreSearchHashtagResponseDTO(s));
+            }
+            return new ResponseEntity<>(new StorePageDto<>(response, pageInfo), HttpStatus.OK);
+        }
+
+        else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+   //storeId로 검색해 정보 반환
+    @GetMapping(path = "/search/{storeId}")
     public ResponseEntity<StoreInfoResponseDTO> getByStoreId(@PathVariable Long storeId) {
         StoreStatic s = userService.getStoreInfo(storeId);
         StoreInfoResponseDTO storeInfoResponseDTO = storeMapper.storeStaticToStoreInfoResponseDTO(s);
@@ -87,6 +112,8 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).body(storeInfoResponseDTO);
         }
     }
+
+
 
 
 }

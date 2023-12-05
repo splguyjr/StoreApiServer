@@ -5,7 +5,6 @@ import com.example.cloudproject.storeapi.entity.StoreStatic;
 import com.example.cloudproject.storeapi.mapper.StoreMapper;
 import com.example.cloudproject.storeapi.page.PageInfo;
 import com.example.cloudproject.storeapi.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

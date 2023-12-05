@@ -1,5 +1,6 @@
 package com.example.cloudproject.storeapi.service;
 
+import com.example.cloudproject.storeapi.dto.StoreInfoResponseDTO;
 import com.example.cloudproject.storeapi.dto.StoreSearchTextResponseDTO;
 import com.example.cloudproject.storeapi.entity.StoreStatic;
 import com.example.cloudproject.storeapi.repository.StoreStaticRepository;
@@ -32,6 +33,9 @@ public class UserService {
         return storeStaticRepository.findByCategoryId_CategoryId(categoryId, pageRequest);
     }
 
+    public StoreStatic getStoreInfo(Long storeId) {
+        return storeStaticRepository.findByStoreId(storeId);
+    }
     //Read by searchWord
     /*public StoreSearchTextResponseDTO getText(String searchWord) {
         List<StoreStatic> sList = this.storeStaticRepository.findByStoreNameLike("%"+searchWord+"%");

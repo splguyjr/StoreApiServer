@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +73,20 @@ public class UserController {
            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
        }
    }
+
+    @GetMapping(path = "/{storeId}")
+    public ResponseEntity<StoreInfoResponseDTO> getByStoreId(@PathVariable Long storeId) {
+        StoreStatic s = userService.getStoreInfo(storeId);
+        StoreInfoResponseDTO storeInfoResponseDTO = storeMapper.storeStaticToStoreInfoResponseDTO(s);
+
+        if (storeInfoResponseDTO == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        else {
+            return ResponseEntity.status(HttpStatus.OK).body(storeInfoResponseDTO);
+        }
+    }
 
 
 }

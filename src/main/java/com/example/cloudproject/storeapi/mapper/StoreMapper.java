@@ -1,6 +1,7 @@
 package com.example.cloudproject.storeapi.mapper;
 
 
+import com.example.cloudproject.storeapi.dto.StoreInfoResponseDTO;
 import com.example.cloudproject.storeapi.dto.StoreSearchCategoryResponseDTO;
 import com.example.cloudproject.storeapi.dto.StoreSearchTextResponseDTO;
 import com.example.cloudproject.storeapi.entity.StoreStatic;
@@ -20,7 +21,7 @@ public class StoreMapper {
     //    private List<Integer> hashtags;
     public StoreSearchTextResponseDTO storeStaticToStoreSearchTextResponseDTO(StoreStatic storeStatic) {
         Byte grade = (byte)(storeStatic.getGradeSum()/ storeStatic.getGradeNum() * 10);//소수점 첫째 자리까지 표현하기 위해 *10, 50이면 5.0을 의미
-        List<Integer> hashtags = new ArrayList<Integer>();
+        List<Integer> hashtags = new ArrayList<>();
         hashtags.add(storeStatic.getHashtagId1());
         hashtags.add(storeStatic.getHashtagId2());
         hashtags.add(storeStatic.getHashtagId3());
@@ -28,13 +29,14 @@ public class StoreMapper {
         return StoreSearchTextResponseDTO.builder()
                 .storeId(storeStatic.getStoreId())
                 .storeName(storeStatic.getStoreName())
-                .grade(grade).hashtags(hashtags)
+                .grade(grade)
+                .hashtags(hashtags)
                 .build();
     }
 
     public StoreSearchCategoryResponseDTO storeStaticToStoreSearchCategoryResponseDTO(StoreStatic storeStatic) {
         Byte grade = (byte)(storeStatic.getGradeSum()/ storeStatic.getGradeNum() * 10);//소수점 첫째 자리까지 표현하기 위해 *10, 50이면 5.0을 의미
-        List<Integer> hashtags = new ArrayList<Integer>();
+        List<Integer> hashtags = new ArrayList<>();
         hashtags.add(storeStatic.getHashtagId1());
         hashtags.add(storeStatic.getHashtagId2());
         hashtags.add(storeStatic.getHashtagId3());
@@ -42,7 +44,24 @@ public class StoreMapper {
         return StoreSearchCategoryResponseDTO.builder()
                 .storeId(storeStatic.getStoreId())
                 .storeName(storeStatic.getStoreName())
-                .grade(grade).hashtags(hashtags)
+                .grade(grade)
+                .hashtags(hashtags)
+                .build();
+    }
+
+    public StoreInfoResponseDTO storeStaticToStoreInfoResponseDTO(StoreStatic storeStatic) {
+        Byte grade = (byte)(storeStatic.getGradeSum()/ storeStatic.getGradeNum() * 10);//소수점 첫째 자리까지 표현하기 위해 *10, 50이면 5.0을 의미
+        List<Integer> hashtags = new ArrayList<>();
+        hashtags.add(storeStatic.getHashtagId1());
+        hashtags.add(storeStatic.getHashtagId2());
+        hashtags.add(storeStatic.getHashtagId3());
+
+        return StoreInfoResponseDTO.builder()
+                .storeName(storeStatic.getStoreName())
+                .x(storeStatic.getX())
+                .y(storeStatic.getY())
+                .grade(grade)
+                .hashtags(hashtags)
                 .build();
     }
 }

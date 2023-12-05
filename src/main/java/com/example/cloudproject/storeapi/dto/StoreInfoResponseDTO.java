@@ -16,5 +16,5 @@ public class StoreInfoResponseDTO {
     private Byte grade;
     private Double x;
     private Double y;
-    private List<Integer> hastags;
+    private List<Integer> hashtags;
 }

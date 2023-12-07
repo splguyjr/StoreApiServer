@@ -2,6 +2,7 @@ package com.example.cloudproject.storeapi.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter
@@ -25,7 +26,8 @@ public class StoreStatic {
     @Column(nullable = false)
     private double y;
 
-    @Column(nullable = false)
+    @Column
+    @ColumnDefault("true")
     private Boolean isOpen;
 
     @Column
@@ -37,9 +39,11 @@ public class StoreStatic {
     @Column
     private Integer hashtagId3;
 
-    @Column(nullable = false)
+    @Column
+    @ColumnDefault("0")
     private Byte grade;
 
-    @Column(nullable = false)
+    @Column
+    @ColumnDefault("0")
     private Integer preferenceNum;
 }

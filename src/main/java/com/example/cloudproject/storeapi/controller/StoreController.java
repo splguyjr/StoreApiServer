@@ -4,7 +4,7 @@ import com.example.cloudproject.storeapi.dto.*;
 import com.example.cloudproject.storeapi.entity.StoreStatic;
 import com.example.cloudproject.storeapi.mapper.StoreMapper;
 import com.example.cloudproject.storeapi.page.PageInfo;
-import com.example.cloudproject.storeapi.service.UserService;
+import com.example.cloudproject.storeapi.service.StoreService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +15,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping({"store"})
-public class UserController {
-    private final UserService userService;
+public class StoreController {
+    private final StoreService storeService;
     private final StoreMapper storeMapper;
 
-    public UserController(UserService userService, StoreMapper storeMapper) {
-        this.userService = userService;
+    public StoreController(StoreService storeService, StoreMapper storeMapper) {
+        this.storeService = storeService;
         this.storeMapper = storeMapper;
     }
 
@@ -32,7 +32,7 @@ public class UserController {
         int size = storeSearchTextRequestDTO.getRow();
         String searchWord = storeSearchTextRequestDTO.getSearchWord();
 
-        Page<StoreStatic> storeStaticPage = userService.paging(page-1, size, searchWord);
+        Page<StoreStatic> storeStaticPage = storeService.paging(page-1, size, searchWord);
         PageInfo pageInfo = new PageInfo(page, size, (int)storeStaticPage.getTotalElements(), storeStaticPage.getTotalPages());
 
         List<StoreStatic> sList = storeStaticPage.getContent();
@@ -56,7 +56,7 @@ public class UserController {
         int size = storeSearchCategoryRequestDTO.getRow();
         Integer categoryId = storeSearchCategoryRequestDTO.getCategory();
 
-       Page<StoreStatic> storeStaticPage = userService.paging1(page-1, size, categoryId);
+       Page<StoreStatic> storeStaticPage = storeService.paging1(page-1, size, categoryId);
        PageInfo pageInfo = new PageInfo(page, size, (int)storeStaticPage.getTotalElements(), storeStaticPage.getTotalPages());
 
        List<StoreStatic> sList = storeStaticPage.getContent();
@@ -80,7 +80,7 @@ public class UserController {
         int size = storeSearchHashtagRequestDTO.getRow();
         Integer hashtagId = storeSearchHashtagRequestDTO.getHashtagId();
 
-        Page<StoreStatic> storeStaticPage = userService.paging2(page-1, size, hashtagId);
+        Page<StoreStatic> storeStaticPage = storeService.paging2(page-1, size, hashtagId);
         PageInfo pageInfo = new PageInfo(page, size, (int)storeStaticPage.getTotalElements(), storeStaticPage.getTotalPages());
 
         List<StoreStatic> sList = storeStaticPage.getContent();
@@ -98,18 +98,18 @@ public class UserController {
     }
 
    //storeId로 검색해 정보 반환
-    @GetMapping(path = "/search/{storeId}")
+    @GetMapping(path = "/{storeId}")
     public ResponseEntity<StoreInfoResponseDTO> getByStoreId(@PathVariable Long storeId) {
-        StoreStatic s = userService.getStoreInfo(storeId);
-        StoreInfoResponseDTO storeInfoResponseDTO = storeMapper.storeStaticToStoreInfoResponseDTO(s);
+        StoreStatic s = storeService.getStoreInfo(storeId);
 
-        if (storeInfoResponseDTO == null) {
+        if (s == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        else {
-            return ResponseEntity.status(HttpStatus.OK).body(storeInfoResponseDTO);
-        }
+        StoreInfoResponseDTO storeInfoResponseDTO = storeMapper.storeStaticToStoreInfoResponseDTO(s);
+
+        return ResponseEntity.status(HttpStatus.OK).body(storeInfoResponseDTO);
+
     }
 
     @PatchMapping(path = "/{storeId}/hashtag-and-grade")
@@ -118,7 +118,7 @@ public class UserController {
         Byte grade = storeHashtagUpdateRequestDTO.getGrade();
         List<Integer> hashtags = storeHashtagUpdateRequestDTO.getHashtags();
 
-        if(userService.updateHashtag(storeId, grade, hashtags)) {
+        if(storeService.updateHashtag(storeId, grade, hashtags)) {
            return ResponseEntity.ok().build();
        }
 
@@ -127,6 +127,32 @@ public class UserController {
        }
     }
 
+    //hashtag로 검색해 가게 정보 리스트 반환
+    @GetMapping(path = "/name")
+    public ResponseEntity getStoreList(@RequestParam List<Long> storeIdList) {
 
+        List<StoreNameInfoListResponseDTO> response = new ArrayList<>();
+
+        if(!storeIdList.isEmpty()) {
+            for (Long storeId : storeIdList) {
+                StoreStatic s = storeService.getStoreInfo(storeId);
+                if (s != null) {
+                    response.add(storeMapper.storeStaticToStoreNameInfoListResponseDTO(s));
+                }
+            }
+
+            if (response.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            else {
+                return new ResponseEntity<>(new StoreDto<>(response), HttpStatus.OK);
+            }
+        }
+
+        else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }

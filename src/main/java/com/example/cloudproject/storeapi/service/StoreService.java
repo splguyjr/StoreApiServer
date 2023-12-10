@@ -1,27 +1,22 @@
 package com.example.cloudproject.storeapi.service;
 
-import com.example.cloudproject.storeapi.dto.StoreHashtagUpdateResponseDTO;
-import com.example.cloudproject.storeapi.dto.StoreInfoResponseDTO;
-import com.example.cloudproject.storeapi.dto.StoreSearchTextResponseDTO;
 import com.example.cloudproject.storeapi.entity.StoreStatic;
 import com.example.cloudproject.storeapi.repository.StoreStaticRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class StoreService {
 
     private final StoreStaticRepository storeStaticRepository;
 
     @Autowired
-    public UserService(StoreStaticRepository storeStaticRepository) {
+    public StoreService(StoreStaticRepository storeStaticRepository) {
         this.storeStaticRepository = storeStaticRepository;
     }
 
@@ -41,7 +36,13 @@ public class UserService {
     }
 
     public StoreStatic getStoreInfo(Long storeId) {
-        return storeStaticRepository.findByStoreId(storeId);
+        Optional<StoreStatic> store = storeStaticRepository.findById(storeId);
+        if (store.isPresent()) {
+            return store.get();
+        }
+        else {
+            return null;
+        }
     }
 
     public boolean updateHashtag(Long storeId, Byte grade, List<Integer> hashtags) {
@@ -64,4 +65,5 @@ public class UserService {
             return false;
         }
     }
+
 }

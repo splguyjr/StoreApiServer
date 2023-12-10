@@ -5,11 +5,11 @@ import lombok.Getter;
 
 @Getter
 public class StorePageDto<T> {
-    private T data;
+    private T stores;
     private PageInfo pageInfo;
 
-    public StorePageDto(T data, PageInfo pageInfo) {
-        this.data = data;
+    public StorePageDto(T stores, PageInfo pageInfo) {
+        this.stores = stores;
         this.pageInfo = pageInfo;
     }
 }

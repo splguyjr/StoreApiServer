@@ -1,15 +1,10 @@
 package com.example.cloudproject.storeapi.mapper;
 
 
-import com.example.cloudproject.storeapi.dto.StoreInfoResponseDTO;
-import com.example.cloudproject.storeapi.dto.StoreSearchCategoryResponseDTO;
-import com.example.cloudproject.storeapi.dto.StoreSearchHashtagResponseDTO;
-import com.example.cloudproject.storeapi.dto.StoreSearchTextResponseDTO;
+import com.example.cloudproject.storeapi.dto.*;
 import com.example.cloudproject.storeapi.entity.StoreStatic;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.stereotype.Component;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,5 +76,14 @@ public class StoreMapper {
                 .build();
     }
 
+    public StoreNameInfoListResponseDTO storeStaticToStoreNameInfoListResponseDTO(StoreStatic storeStatic) {
+        Long storeId = storeStatic.getStoreId();
+        String storeName = storeStatic.getStoreName();
+
+        return StoreNameInfoListResponseDTO.builder()
+                .storeId(storeId)
+                .storeName(storeName)
+                .build();
+    }
 
 }

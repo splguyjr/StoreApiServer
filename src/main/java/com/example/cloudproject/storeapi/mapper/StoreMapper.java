@@ -84,8 +84,8 @@ public class StoreMapper {
         String storeName = storeStatic.getStoreName();
 
         return StoreNameInfoListResponseDTO.builder()
-                .storeId(storeId)
-                .storeName(storeName)
+                .id(storeId)
+                .name(storeName)
                 .build();
     }
 

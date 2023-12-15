@@ -29,11 +29,11 @@ public class StoreController {
     @GetMapping(path = "/search/text")
     public ResponseEntity getByText(@RequestBody StoreSearchTextRequestDTO storeSearchTextRequestDTO) {
         int page = storeSearchTextRequestDTO.getPage();
-        int size = storeSearchTextRequestDTO.getRow();
+        int row = storeSearchTextRequestDTO.getRow();
         String searchWord = storeSearchTextRequestDTO.getSearchWord();
 
-        Page<StoreStatic> storeStaticPage = storeService.paging(page-1, size, searchWord);
-        PageInfo pageInfo = new PageInfo(page, size, (int)storeStaticPage.getTotalElements(), storeStaticPage.getTotalPages());
+        Page<StoreStatic> storeStaticPage = storeService.paging(page-1, row, searchWord);
+        PageInfo pageInfo = new PageInfo(page, row, storeStaticPage.getNumberOfElements(), (int)storeStaticPage.getTotalElements(), storeStaticPage.getTotalPages());
 
         List<StoreStatic> sList = storeStaticPage.getContent();
         List<StoreSearchTextResponseDTO> response = new ArrayList<>();
@@ -53,11 +53,11 @@ public class StoreController {
    @GetMapping(path = "/search/category")
    public ResponseEntity getByCategory(@RequestBody StoreSearchCategoryRequestDTO storeSearchCategoryRequestDTO) {
         int page = storeSearchCategoryRequestDTO.getPage();
-        int size = storeSearchCategoryRequestDTO.getRow();
+        int row = storeSearchCategoryRequestDTO.getRow();
         Integer categoryId = storeSearchCategoryRequestDTO.getCategory();
 
-       Page<StoreStatic> storeStaticPage = storeService.paging1(page-1, size, categoryId);
-       PageInfo pageInfo = new PageInfo(page, size, (int)storeStaticPage.getTotalElements(), storeStaticPage.getTotalPages());
+       Page<StoreStatic> storeStaticPage = storeService.paging1(page-1, row, categoryId);
+       PageInfo pageInfo = new PageInfo(page, row, storeStaticPage.getNumberOfElements(), (int)storeStaticPage.getTotalElements(), storeStaticPage.getTotalPages());
 
        List<StoreStatic> sList = storeStaticPage.getContent();
        List<StoreSearchCategoryResponseDTO> response = new ArrayList<>();
@@ -77,11 +77,11 @@ public class StoreController {
     @GetMapping(path = "/search/hashtag")
     public ResponseEntity getByHashtag(@RequestBody StoreSearchHashtagRequestDTO storeSearchHashtagRequestDTO) {
         int page = storeSearchHashtagRequestDTO.getPage();
-        int size = storeSearchHashtagRequestDTO.getRow();
+        int row = storeSearchHashtagRequestDTO.getRow();
         Integer hashtagId = storeSearchHashtagRequestDTO.getHashtagId();
 
-        Page<StoreStatic> storeStaticPage = storeService.paging2(page-1, size, hashtagId);
-        PageInfo pageInfo = new PageInfo(page, size, (int)storeStaticPage.getTotalElements(), storeStaticPage.getTotalPages());
+        Page<StoreStatic> storeStaticPage = storeService.paging2(page-1, row, hashtagId);
+        PageInfo pageInfo = new PageInfo(page, row, storeStaticPage.getNumberOfElements(), (int)storeStaticPage.getTotalElements(), storeStaticPage.getTotalPages());
 
         List<StoreStatic> sList = storeStaticPage.getContent();
         List<StoreSearchHashtagResponseDTO> response = new ArrayList<>();
@@ -127,7 +127,7 @@ public class StoreController {
        }
     }
 
-    //hashtag로 검색해 가게 정보 리스트 반환
+    //가게 id list를 받아 가게 이름 정보를 리스트로 돌려줌
     @GetMapping(path = "/name")
     public ResponseEntity getStoreList(@RequestParam List<Long> storeIdList) {
 

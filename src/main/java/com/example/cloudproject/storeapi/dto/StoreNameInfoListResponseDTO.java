@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class StoreNameInfoListResponseDTO {
-    private Long storeId;
-    private String storeName;
+    private Long id;
+    private String name;
 }

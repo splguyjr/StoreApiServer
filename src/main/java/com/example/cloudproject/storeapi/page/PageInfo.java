@@ -7,7 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class PageInfo {
     private int page;
-    private int size;
+    private int row;
+    private int elements;
     private int totalElements;
     private int totalPages;
 }

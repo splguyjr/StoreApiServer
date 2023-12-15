@@ -26,6 +26,7 @@ public class StoreMapper {
                 .storeId(storeStatic.getStoreId())
                 .storeName(storeStatic.getStoreName())
                 .grade(grade)
+                .category(storeStatic.getCategoryId().getCategoryId())
                 .hashtags(hashtags)
                 .build();
     }
@@ -41,6 +42,7 @@ public class StoreMapper {
                 .storeId(storeStatic.getStoreId())
                 .storeName(storeStatic.getStoreName())
                 .grade(grade)
+                .category(storeStatic.getCategoryId().getCategoryId())
                 .hashtags(hashtags)
                 .build();
     }
@@ -56,6 +58,7 @@ public class StoreMapper {
                 .storeName(storeStatic.getStoreName())
                 .storeId(storeStatic.getStoreId())
                 .grade(grade)
+                .category(storeStatic.getCategoryId().getCategoryId())
                 .hashtags(hashtags)
                 .build();
     }

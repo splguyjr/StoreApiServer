@@ -13,8 +13,13 @@ import java.util.List;
 @Builder
 public class StoreSearchCategoryResponseDTO {
     private String storeName;
+
     private Byte grade;
+
     private Long storeId;
+
+    private Integer category;
+
     private List<Integer> hashtags;
 
 }

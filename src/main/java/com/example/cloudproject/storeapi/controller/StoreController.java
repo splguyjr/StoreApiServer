@@ -27,12 +27,9 @@ public class StoreController {
 
     //searchword로 검색해 가게 정보 리스트 반환
     @GetMapping(path = "/search/text")
-    public ResponseEntity getByText(@RequestBody StoreSearchTextRequestDTO storeSearchTextRequestDTO) {
-        int page = storeSearchTextRequestDTO.getPage();
-        int row = storeSearchTextRequestDTO.getRow();
-        String searchWord = storeSearchTextRequestDTO.getSearchWord();
+    public ResponseEntity getByText(@RequestParam int page, @RequestParam int row, @RequestParam String searchWord) {
 
-        Page<StoreStatic> storeStaticPage = storeService.paging(page-1, row, searchWord);
+        Page<StoreStatic> storeStaticPage = storeService.paging(page, row, searchWord);
         PageInfo pageInfo = new PageInfo(page, row, storeStaticPage.getNumberOfElements(), (int)storeStaticPage.getTotalElements(), storeStaticPage.getTotalPages());
 
         List<StoreStatic> sList = storeStaticPage.getContent();
@@ -51,12 +48,9 @@ public class StoreController {
 
     //category로 검색해 가게 정보 리스트 반환
    @GetMapping(path = "/search/category")
-   public ResponseEntity getByCategory(@RequestBody StoreSearchCategoryRequestDTO storeSearchCategoryRequestDTO) {
-        int page = storeSearchCategoryRequestDTO.getPage();
-        int row = storeSearchCategoryRequestDTO.getRow();
-        Integer categoryId = storeSearchCategoryRequestDTO.getCategory();
+   public ResponseEntity getByCategory(@RequestParam int page, @RequestParam int row, @RequestParam Integer category) {
 
-       Page<StoreStatic> storeStaticPage = storeService.paging1(page-1, row, categoryId);
+       Page<StoreStatic> storeStaticPage = storeService.paging1(page, row, category);
        PageInfo pageInfo = new PageInfo(page, row, storeStaticPage.getNumberOfElements(), (int)storeStaticPage.getTotalElements(), storeStaticPage.getTotalPages());
 
        List<StoreStatic> sList = storeStaticPage.getContent();
@@ -75,12 +69,10 @@ public class StoreController {
 
    //hashtag로 검색해 가게 정보 리스트 반환
     @GetMapping(path = "/search/hashtag")
-    public ResponseEntity getByHashtag(@RequestBody StoreSearchHashtagRequestDTO storeSearchHashtagRequestDTO) {
-        int page = storeSearchHashtagRequestDTO.getPage();
-        int row = storeSearchHashtagRequestDTO.getRow();
-        Integer hashtagId = storeSearchHashtagRequestDTO.getHashtagId();
+    public ResponseEntity getByHashtag(@RequestParam int page, @RequestParam int row, @RequestParam Integer hashtagId) {
 
-        Page<StoreStatic> storeStaticPage = storeService.paging2(page-1, row, hashtagId);
+
+        Page<StoreStatic> storeStaticPage = storeService.paging2(page, row, hashtagId);
         PageInfo pageInfo = new PageInfo(page, row, storeStaticPage.getNumberOfElements(), (int)storeStaticPage.getTotalElements(), storeStaticPage.getTotalPages());
 
         List<StoreStatic> sList = storeStaticPage.getContent();
